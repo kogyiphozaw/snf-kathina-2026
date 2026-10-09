@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>၂၀၂၆ ခုနှစ် ပဲခူး ကျိုက်ဒေးကစီကျောင်းတိုက် စုပေါင်းမဟာဘုံကထိန်ပွဲ အလှူရှင်များစာရင်း</title>
+    <title>SNF ပြည်တွင်းပြည်ပသာသနာပြုအဖွဲ့ - အလှူတော်မှတ်တမ်း</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Padauk:wght@400;700&display=swap" rel="stylesheet">
@@ -13,6 +13,12 @@
             background-color: #f8f6f0;
             -webkit-tap-highlight-color: transparent;
         }
+        .tab-active {
+            border-bottom: 3px solid #b45309;
+            color: #78350f;
+            font-weight: bold;
+            background-color: #fffbeb;
+        }
     </style>
 </head>
 <body class="p-2 sm:p-4 md:p-6 text-slate-800">
@@ -20,26 +26,16 @@
     <div class="max-w-4xl mx-auto bg-white shadow-xl rounded-2xl border border-amber-100 overflow-hidden">
         
         <!-- Header Banner -->
-        <div class="bg-gradient-to-r from-amber-800 via-amber-700 to-amber-900 text-white p-4 sm:p-6 text-center shadow-md">
-            <span class="inline-block bg-amber-900/60 text-amber-200 text-xs px-3 py-1 rounded-full font-bold mb-2">
-                ၂၀၂၆ ခုနှစ်
-            </span>
-            <h1 class="text-xl sm:text-2xl md:text-3xl font-bold mb-1 leading-snug">
-                ပဲခူး ကျိုက်ဒေးကစီကျောင်းတိုက်
+        <div class="bg-gradient-to-r from-amber-800 via-amber-700 to-amber-900 text-white p-6 text-center shadow-md">
+            <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-wide text-amber-100">
+                SNF ပြည်တွင်းပြည်ပသာသနာပြုအဖွဲ့
             </h1>
-            <h2 class="text-lg sm:text-xl md:text-2xl font-bold mb-2 text-amber-100">
-                စုပေါင်းမဟာဘုံကထိန်ပွဲ အလှူရှင်များစာရင်း
-            </h2>
-            <p class="text-xs sm:text-sm font-semibold text-amber-200 bg-amber-950/40 py-1 px-3 rounded-lg inline-block">
-                (SNF ပြည်တွင်းပြည်ပသာသနာပြုအဖွဲ့)
-            </p>
         </div>
 
-        <!-- Announcement Box -->
+        <!-- Announcement / Info Box -->
         <div class="p-4 sm:p-5 bg-amber-50/70 border-b border-amber-100 text-slate-700 text-xs sm:text-sm md:text-base leading-relaxed">
-            <p class="mb-2">
-                ၂၀၂၆ ခုနှစ် ပဲခူး ကျိုက်ဒေးကစီကျောင်းတိုက် စုပေါင်းမဟာဘုံကထိန်ပွဲ အလှူ အဖွဲ့ (၅) ဖွဲ့တွင် 
-                <span class="font-bold text-amber-900">SNF ပြည်တွင်းပြည်ပသာသနာပြုအဖွဲ့</span> မှလည်း ယခုနှစ်က စတင်၍ နှစ်စဉ် ပါဝင် လှူဒါန်းကြမည် ဖြစ်ပါသည်။
+            <p id="tabDescription" class="mb-2">
+                <!-- Tab Description will update dynamically -->
             </p>
             <div class="mt-3 p-2.5 sm:p-3 bg-amber-100/80 rounded-xl border border-amber-200/80 flex items-center justify-between flex-wrap gap-2">
                 <span class="font-bold text-amber-950 text-xs sm:text-sm">
@@ -51,12 +47,24 @@
             </div>
         </div>
 
-        <!-- Total Sticky Summary Card -->
+        <!-- Navigation Tabs -->
+        <div class="flex border-b border-amber-200 bg-amber-50/40 text-xs sm:text-sm md:text-base font-bold text-slate-600">
+            <button id="tabKathinaBtn" onclick="switchTab('kathina')" class="flex-1 py-3.5 px-2 text-center transition flex items-center justify-center gap-1.5 tab-active">
+                <span>🪷</span>
+                <span>စုပေါင်းမဟာဘုံကထိန်ပွဲ အလှူ</span>
+            </button>
+            <button id="tabFloodBtn" onclick="switchTab('flood')" class="flex-1 py-3.5 px-2 text-center transition flex items-center justify-center gap-1.5">
+                <span>🌊</span>
+                <span>ခရီးစရိတ်နှင့် ရေဘေးအလှူ</span>
+            </button>
+        </div>
+
+        <!-- Total Summary Card -->
         <div class="p-4 bg-amber-900 text-white flex justify-between items-center shadow-inner">
-            <span class="text-xs sm:text-sm font-bold text-amber-200">
-                စုစုပေါင်း ရရှိထားသော အလှူငွေ
+            <span class="text-xs sm:text-sm font-bold text-amber-200" id="summaryTitle">
+                ကထိန်အလှူ စုစုပေါင်း ရရှိထားသော ငွေ
             </span>
-            <span id="publicTotalHeader" class="text-base sm:text-xl md:text-2xl font-black text-yellow-300">
+            <span id="totalAmount" class="text-base sm:text-xl md:text-2xl font-black text-yellow-300">
                 0 /- Ks
             </span>
         </div>
@@ -70,7 +78,7 @@
                 </span>
             </h3>
 
-            <!-- 1. Mobile Card View (Android & iPhone) -->
+            <!-- 1. Mobile Card View -->
             <div id="mobileCards" class="block md:hidden space-y-3">
                 <!-- Mobile donor cards injected dynamically -->
             </div>
@@ -81,7 +89,7 @@
                     <thead>
                         <tr class="bg-amber-800 text-white text-xs sm:text-sm">
                             <th class="p-3 text-center w-12 border-b border-amber-700">စဉ်</th>
-                            <th class="p-3 w-32 border-b border-amber-700">လှူဒါန်းသည့်နေ့စွဲ</th>
+                            <th class="p-3 w-32 border-b border-amber-700">နေ့စွဲ</th>
                             <th class="p-3 border-b border-amber-700">အလှူရှင် အမည် / နေရပ်</th>
                             <th class="p-3 w-28 text-center border-b border-amber-700">အမျိုးအစား</th>
                             <th class="p-3 text-right w-36 border-b border-amber-700">လှူဒါန်းငွေ (ကျပ်)</th>
@@ -108,32 +116,68 @@
     </div>
 
     <script>
-        // အလှူရှင်များ စာရင်း (အလှူရှင် ထပ်တိုးပါက ဤနေရာတွင် ထည့်သွင်းပါ)
-        const donorData = [
+        // ၁။ ကထိန်အလှူရှင်များ စာရင်း
+        const kathinaData = [
             { date: "27-09-2026", name: "ကိုကျော်စွာ + မတင်တင်နွယ် မိသားစု- နေပြည်တော်", type: "Kpay", amount: 100000 },
-            { date: "27-09-2026", name: "ကိုသန့်ဇော်လင်း + မဝေမာ  သား မောင်သက်ပိုင်လင်း၊ သမီး မစံယွန်းမေ မိသားစု ရန်ကုန်မြို့", type: "Kpay", amount: 100000 },
+            { date: "27-09-2026", name: "ကိုသန့်ဇော်လင်း + မဝေမာ သားမောင်သက်ပိုင်လင်း၊ သမီး မစံယွန်းမေ မိသားစု- ရန်ကုန်မြို့", type: "Kpay", amount: 100000 },
             { date: "27-09-2026", name: "မသိမ့်သဥ္စာစိုး", type: "Kpay", amount: 100000 },
             { date: "27-09-2026", name: "မကေသွယ်ခိုင်", type: "Kpay", amount: 110000 },
             { date: "28-09-2026", name: "ဒေါ်စုစုအောင်", type: "KBZ Bank", amount: 3000000 },
-            { date: "30-09-2026", name: "ကိုစခိုင်မင်းဦး + မဖြူဖြူဝင်း   သမီး မဖြူဖြူခိုင်မင်း ၊ သားမောင်လရောင်လင်း မိသားစု", type: "Kpay", amount: 40000 },
-            { date: "01-10-2026", name: "မိခင်ကြီး ဒေါ်သန်း အား အမှူးထား၍ မစိန်စိန်မိသားစု", type: "Kpay", amount: 100000 },
+            { date: "30-09-2026", name: "ကိုစခိုင်မင်းဦး+မဖြူဖြူဝင်း၊သမီးမဖြူဖြူခိုင်မင်း၊သားမောင်လရောင်လင်း မိသားစု", type: "Kpay", amount: 40000 },
+            { date: "01-10-2026", name: "မိခင်ကြီးဒေါ်သန်းအားအမှူးထား၍ မစိန်စိန်မိသားစု", type: "Kpay", amount: 100000 },
             { date: "01-10-2026", name: "ဒေါ်မို့မို့", type: "Kpay", amount: 50000 },
-            { date: "01-10-2026", name: " မအင်ကြင်းလှမြင့် ", type: "Kpay", amount: 300000 },
-            { date: "02-10-2026", name: " ထူးလင်းယံ မိသားစု (စမ်းချောင်းမြို့နယ်) ", type: "Kpay", amount: 300000 },
-            { date: "04-10-2026", name: " မဧပရယ်ဌေး ", type: "Cash", amount: 50000 },
-            { date: "04-10-2026", name: " မကျော့ကျော့ခိုင် ", type: "Kpay", amount: 100000 },
-            { date: "05-10-2026", name: " ကိုသန်းဇော်ဦး + မမြင့်ကေခိုင်မိသားစု ", type: "Cash", amount: 50000 },
-            { date: "05-10-2026", name: " မချောစုလှိုင် မိသားစု ", type: "Kpay", amount: 20000 },
-            { date: "05-10-2026", name: " မမြမြမိုး မိသားစု ", type: "Kpay", amount: 30000 },
-            { date: "05-10-2026", name: " မသီသီလှိုင် မိသားစု ", type: "Cash", amount: 100000 },
-            { date: "05-10-2026", name: " ဦးတင်အေး မိသားစု ", type: "Cash", amount: 20000 },
-            { date: "05-10-2026", name: " ဒေါ်မြင့်မြင့်ဝေ၊ ဒေါ်လှလှဝင်း မိသားစု မြစ်ကြီနားမြို့ (ယောဂီဟောင်း) ", type: "Kpay", amount: 100000 },
-            { date: "06-10-2026", name: " မယမင်းဖြိုးအိ ", type: "Kpay", amount: 30000 },
-            { date: "06-10-2026", name: " ဒေါ်ဆွေဆွေမြင့် ", type: "Kpay", amount: 100000 },
-            { date: "08-10-2026", name: " ကိုထွန်းဝေ + မမေလွင်သော် ထွန်းပြည်လျှံ ကုမ္ပဏီ ", type: "Kpay", amount: 300000 },
+            { date: "01-10-2026", name: "မအင်ကြင်း", type: "Kpay", amount: 300000 },
+            { date: "02-10-2026", name: "ထူးလင်းယံ မိသားစု", type: "Kpay", amount: 300000 },
+            { date: "04-10-2026", name: "မဧပရယ်ဌေး", type: "Cash", amount: 50000 },
+            { date: "04-10-2026", name: "မကျော့ကျော့ခိုင်", type: "Kpay", amount: 100000 },
+            { date: "05-10-2026", name: "ကိုသန်းဇော်ဦး + မမြင့်ကေခိုင်မိသားစု", type: "Cash", amount: 50000 },
+            { date: "05-10-2026", name: "မချောစုလှိုင်", type: "Kpay", amount: 20000 },
+            { date: "05-10-2026", name: "မမြမြမိုး", type: "Kpay", amount: 30000 },
+            { date: "05-10-2026", name: "မသီသီလှိုင်", type: "Cash", amount: 100000 },
+            { date: "05-10-2026", name: "ဦးတင်အေး မိသားစု", type: "Cash", amount: 20000 },
+            { date: "05-10-2026", name: "ဒေါ်မြင့်မြင့်ဝေ၊ ဒေါ်လှလှဝင်း မိသားစု မြစ်ကြီးနားမြို့ (ယောဂီဟောင်း)", type: "Kpay", amount: 100000 },
+            { date: "06-10-2026", name: "မယမင်းဖြိုးအိ", type: "Kpay", amount: 30000 },
+            { date: "06-10-2026", name: "မဆွေဆွေမြင့်", type: "Kpay", amount: 100000 },
+            { date: "08-10-2026", name: "ကိုထွန်းဝေ+မမေလွင်သော် ထွန်းပြည်လျှံ ကုမ္ပဏီ", type: "Kpay", amount: 300000 },
+            { date: "09-10-2026", name: "ဒေါ်ချိုချိုအောင် ၊ ဒေါ်မီမီအောင် မိသားစု", type: "Kpay", amount: 50000 },
+            { date: "09-10-2026", name: "ဒေါ်ယုယုခိုင်၊ မအိမ့်ကြည်စင် မိသားစု", type: "Kpay", amount: 50000 }
         ];
 
-        function renderPublic() {
+        // ၂။ ရေဘေးနှင့် ခရီးစရိတ် အလှူရှင်များ စာရင်း
+        const floodData = [
+            { date: "03-10-2026", name: "မအင်ကြင်းလှမြင့် မိသားစုအလှူ", type: "Kpay", amount: 1000000 },
+            { date: "03-10-2026", name: "မနန်းဟေမာန်ဆောင်း မိသားစု အလှူ", type: "Kpay", amount: 1000000 },
+            { date: "03-10-2026", name: "မကျော့ကျော့ခိုင်", type: "Kpay", amount: 200000 },
+            { date: "05-10-2026", name: "ကိုသန်းဇော်ဦး + မမြင့်ကေခိုင် မိသားစု", type: "Cash", amount: 50000 },
+            { date: "05-10-2026", name: "ကိုကျော်စွာ + မတင်တင်နွယ် မိသားစု နေပြည်တော်", type: "Kpay", amount: 300000 },
+            { date: "05-10-2026", name: "ကိုထွန်းဝေ+မမေလွင်သော် ထွန်းပြည်လျှံ ကုမ္ပဏီ", type: "Kpay", amount: 300000 },
+            { date: "09-10-2026", name: "ထူးလင်းယံမိသားစု စမ်းချောင်း", type: "Kpay", amount: 200000 },
+            { date: "09-10-2026", name: "ဒေါ်ယုယုခိုင် ၊ မအိမ့်ကြည်စင် မိသားစု", type: "Kpay", amount: 50000 }
+        ];
+
+        let currentTab = 'kathina';
+
+        function switchTab(tab) {
+            currentTab = tab;
+            const kathinaBtn = document.getElementById('tabKathinaBtn');
+            const floodBtn = document.getElementById('tabFloodBtn');
+
+            if (tab === 'kathina') {
+                kathinaBtn.classList.add('tab-active');
+                floodBtn.classList.remove('tab-active');
+                document.getElementById('summaryTitle').textContent = 'ကထိန်အလှူ စုစုပေါင်း ရရှိထားသော ငွေ';
+                document.getElementById('tabDescription').innerHTML = '၂၀၂၆ ခုနှစ် ပဲခူး ကျိုက်ဒေးကစီကျောင်းတိုက် စုပေါင်းမဟာဘုံကထိန်ပွဲ အလှူ အဖွဲ့ (၅) ဖွဲ့တွင် <span class="font-bold text-amber-900">SNF ပြည်တွင်းပြည်ပသာသနာပြုအဖွဲ့</span> မှလည်း ယခုနှစ်မှ စတင်၍ နှစ်စဉ် ပါဝင် လှူဒါန်းကြမည် ဖြစ်ပါသည်။';
+                renderData(kathinaData);
+            } else {
+                floodBtn.classList.add('tab-active');
+                kathinaBtn.classList.remove('tab-active');
+                document.getElementById('summaryTitle').textContent = 'ခရီးစရိတ်နှင့် ရေဘေးအလှူ စုစုပေါင်း ငွေ';
+                document.getElementById('tabDescription').innerHTML = '👨‍👩‍👧‍👦🚐🌊 <span class="font-bold text-amber-900">ထားဝယ်မြို့နယ်ရှိ သာမဏေမိဘများတွေ့ဆုံရန် ခရီးစရိတ် နှင့် ရေဘေးအလှူ</span> ပါဝင်လှူဒါန်းထားကြသော အလှူရှင်များ၏ စာရင်းမှတ်တမ်း ဖြစ်ပါသည်။';
+                renderData(floodData);
+            }
+        }
+
+        function renderData(dataList) {
             const mobileContainer = document.getElementById('mobileCards');
             const desktopBody = document.getElementById('desktopTableBody');
             
@@ -141,12 +185,13 @@
             desktopBody.innerHTML = '';
 
             let total = 0;
-            document.getElementById('donorCount').textContent = `${donorData.length} ဦး`;
+            document.getElementById('donorCount').textContent = `${dataList.length} ဦး`;
 
-            donorData.forEach((item, index) => {
+            dataList.forEach((item, index) => {
                 total += item.amount;
                 const formattedAmount = item.amount.toLocaleString('en-US');
-                const badgeColor = item.type === 'Kpay' ? 'bg-blue-100 text-blue-800 border-blue-200' : 'bg-emerald-100 text-emerald-800 border-emerald-200';
+                const badgeColor = item.type === 'Kpay' ? 'bg-blue-100 text-blue-800 border-blue-200' : 
+                                  (item.type === 'KBZ Bank' ? 'bg-purple-100 text-purple-800 border-purple-200' : 'bg-emerald-100 text-emerald-800 border-emerald-200');
 
                 // 1. Render Mobile Card
                 const card = document.createElement('div');
@@ -185,11 +230,12 @@
             });
 
             const totalText = total.toLocaleString('en-US') + ' /- Ks';
-            document.getElementById('publicTotalHeader').textContent = totalText;
+            document.getElementById('totalAmount').textContent = totalText;
             document.getElementById('desktopTotal').textContent = totalText;
         }
 
-        renderPublic();
+        // စတင်ချိန်တွင် ကထိန်အလှူ Tab ကို ပုံသေ ပြသပေးပါမည်
+        switchTab('kathina');
     </script>
 </body>
 </html>
